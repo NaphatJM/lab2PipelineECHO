@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], description: 'Select deployment environment')
+    }
     stages {
         stage('Build') {
             steps {
@@ -15,6 +18,9 @@ pipeline {
                     }
                 }
                 stage('Unit Tests') {
+                    when {
+                        expression { currentBuild.currentResult == 'SUCCESS' }
+                    }
                     steps {
                         echo 'Running unit tests...'
                         sh 'sleep 2'
@@ -32,7 +38,6 @@ pipeline {
             steps {
                 sh 'echo "All tests passed!" > results.txt'
                 archiveArtifacts artifacts: 'results.txt', fingerprint: true
-                sh 'exit 1'
             }
         }
         stage('Approval') {
@@ -45,7 +50,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
+                echo "Deploying application to ${params.ENVIRONMENT} environment..."
             }
         }
     }

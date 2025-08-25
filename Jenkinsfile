@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    parameters {
-        booleanParam(name: 'RUN_DEPLOY', defaultValue: false, description: 'Should we deploy?')
-    }
     stages {
         stage('Build') {
             steps {
@@ -37,14 +34,14 @@ pipeline {
                 archiveArtifacts artifacts: 'results.txt', fingerprint: true
             }
         }
-        stage('Deploy') {
-            when {
-                expression { return params.RUN_DEPLOY }
-            }
-            steps {
-                echo 'Deploying application...'
-            }
+    stage('Deploy') {
+        when {
+            input "Do you want to proceed with deployment?"
         }
+        steps {
+            echo 'Deploying application...'
+        }
+    }
     }
     post {
         success {

@@ -11,10 +11,16 @@ pipeline {
         }
         stage('Test in Parallel') {
             parallel {
-                stage('ls Tests') {
+                stage('Linux Tests') {
                     steps {
-                        echo 'Running ls tests...'
-                        sh 'ls -l'
+                        echo 'Running tests on Linux environment...'
+                        sh 'sleep 2'
+                    }
+                }
+                stage('Windows Tests') {
+                    steps {
+                        echo 'Running tests on Windows environment...'
+                        sh 'sleep 2'
                     }
                 }
                 stage('Unit Tests') {
@@ -23,12 +29,6 @@ pipeline {
                     }
                     steps {
                         echo 'Running unit tests...'
-                        sh 'sleep 2'
-                    }
-                }
-                stage('Integration Tests') {
-                    steps {
-                        echo 'Running integration tests...'
                         sh 'sleep 2'
                     }
                 }

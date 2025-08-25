@@ -37,17 +37,16 @@ pipeline {
                 archiveArtifacts artifacts: 'results.txt', fingerprint: true
             }
         }
-        stage('Deploy') {
-            when {
-                    steps {
-        input "Do you want to proceed with deployment?"
-    }
-
-            }
-            steps {
-                echo 'Deploying application...'
+    stage('Deploy') {
+        when {
+            input {
+                message "Do you want to proceed with deployment?"
             }
         }
+        steps {
+            echo 'Deploying application...'
+        }
+    }
     }
     post {
         success {

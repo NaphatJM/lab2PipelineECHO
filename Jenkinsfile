@@ -17,13 +17,13 @@ pipeline {
                 stage('Unit Tests') {
                     steps {
                         echo 'Running unit tests...'
-                        sh 'sleep 5'
+                        sh 'sleep 2'
                     }
                 }
                 stage('Integration Tests') {
                     steps {
                         echo 'Running integration tests...'
-                        sh 'sleep 5'
+                        sh 'sleep 2'
                     }
                 }
             }

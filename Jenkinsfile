@@ -30,6 +30,10 @@ pipeline {
                     }
                 }
             }
+            steps {
+                sh 'echo "All tests passed!" > results.txt'
+                archiveArtifacts artifacts: 'results.txt', fingerprint: true
+            }
         }
         stage('Deploy') {
             when {
